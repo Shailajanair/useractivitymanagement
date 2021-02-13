@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from user.models import CustomUser, ActivityDetail
 
 
@@ -19,11 +18,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'activity_periods', 'real_name', 'timezone')
+        fields = ('id', 'real_name', 'timezone', 'activity_periods')
 
 
 class ActivityDetailSerializer(serializers.ModelSerializer):
+    start_time = serializers.SerializerMethodField()
+    end_time = serializers.SerializerMethodField()
+
+    def get_start_time(self, obj):
+        return obj.start_time.strftime('%b %-d %Y %-I:%M%p')
+
+    def get_end_time(self, obj):
+        return obj.end_time.strftime('%b %-d %Y %-I:%M%p')
 
     class Meta:
         model = ActivityDetail
-        fields = ('start_date', 'end_date')
+        fields = ('start_time', 'end_time')

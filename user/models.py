@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
 
 class ActivityDetail(models.Model):
     custom_user = models.ManyToManyField(CustomUser)
-    start_time = models.DateTimeField(auto_now_add=True)
+    start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True, blank=True)
 
     class Meta:
